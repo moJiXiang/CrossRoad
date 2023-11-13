@@ -44,10 +44,22 @@ public class PlayerController : MonoBehaviour
   private void FixedUpdate()
   {
     // 每0.02秒执行
-    Debug.Log("FiexedUpdate: " + isJump);
     if (isJump)
     {
       rb.position = Vector2.Lerp(transform.position, destination, 0.134f);
+    }
+  }
+
+  private void OnTriggerStay2D(Collider2D other)
+  {
+    if (other.CompareTag("Border"))
+    {
+      Debug.Log("Game Over!");
+    }
+
+    if (!isJump && other.CompareTag("Obstacle"))
+    {
+      Debug.Log("Game Over!");
     }
   }
 
