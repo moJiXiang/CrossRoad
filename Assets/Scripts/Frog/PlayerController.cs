@@ -6,11 +6,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+  private enum Direction
+  {
+    Up, Right, Left
+  }
   private Rigidbody2D rb;
   private Animator anim;
+  private SpriteRenderer sr;
   public float jumpDistance;
   private float moveDistance;
   private Vector2 destination;
+  private Vector2 touchPosition;
+  private Direction dir;
   private bool buttonHeld;
   private bool isJump;
   private bool canJump;
@@ -19,6 +26,7 @@ public class PlayerController : MonoBehaviour
   {
     rb = GetComponent<Rigidbody2D>();
     anim = GetComponent<Animator>();
+    sr = GetComponent<SpriteRenderer>();
   }
 
   private void Update()
@@ -50,7 +58,7 @@ public class PlayerController : MonoBehaviour
     {
       moveDistance = jumpDistance;
       Debug.Log("JUMP! + " + " " + moveDistance);
-      destination = new Vector2(transform.position.x, transform.position.y + moveDistance);
+      // destination = new Vector2(transform.position.x, transform.position.y + moveDistance);
       canJump = true;
       // isJump = true;
       // TriggerJump();
@@ -68,17 +76,40 @@ public class PlayerController : MonoBehaviour
     if (context.canceled && buttonHeld)
     {
       Debug.Log("LONG JUMP! + " + " " + moveDistance);
-      destination = new Vector2(transform.position.x, transform.position.y + moveDistance);
+      // destination = new Vector2(transform.position.x, transform.position.y + moveDistance);
       buttonHeld = false;
       canJump = true;
       // isJump = true;
       // TriggerJump();
     }
   }
+
+  public void GetTouchPosition(InputAction.CallbackContext context)
+  {
+    if (context.performed)
+    {
+      touchPosition = Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>());
+      var offset = ((Vector3)touchPosition - transform.position).normalized;
+      
+      Debug.Log("Offset: " + offset);
+      if (Mathf.Abs(offset.x) <= 0.7f)
+      {
+        dir = Direction.Up;
+      }
+      else if (offset.x < 0)
+      {
+        dir = Direction.Left;
+      }
+      else if (offset.x > 0)
+      {
+        dir = Direction.Right;
+      }
+    }
+    
+  }
   #endregion
 
   
-  public void GetTouchPosition(InputAction.CallbackContext context) {}
 
   /// <summary>
   /// 触发执行跳跃动画
@@ -86,6 +117,26 @@ public class PlayerController : MonoBehaviour
   private void TriggerJump()
   {
     canJump = false;
+    
+    switch (dir)
+    {
+      case Direction.Left:
+        anim.SetBool("isSide", true);
+        transform.localScale = Vector3.one;
+        destination = new Vector2(transform.position.x - moveDistance, transform.position.y);
+        break;
+      case Direction.Right:
+        anim.SetBool("isSide", true);
+        transform.localScale = new Vector3(-1, 1, 1);
+        destination = new Vector2(transform.position.x + moveDistance, transform.position.y);
+        break;
+      case Direction.Up:
+        anim.SetBool("isSide", false);
+        transform.localScale = Vector3.one;
+        destination = new Vector2(transform.position.x, transform.position.y + moveDistance);
+        break;
+    }
+    
     anim.SetTrigger("Jump");
   }
 
@@ -94,13 +145,13 @@ public class PlayerController : MonoBehaviour
   public void JumpAnimationEvent()
   {
     isJump = true;
-    Debug.Log("JumpAnimationEvent: " + isJump);
+    sr.sortingLayerName = "Front";
   }
 
   public void FinishJumpAnimationEvent()
   {
     isJump = false;
-    Debug.Log("FinishJumpAnimationEvent: " + isJump);
+    sr.sortingLayerName = "Middle";
   }
 
   #endregion

@@ -27,7 +27,7 @@
                     "name": "Touch Position",
                     "type": "Value",
                     "id": "340ae818-82dc-472c-8554-6589c9f91197",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
