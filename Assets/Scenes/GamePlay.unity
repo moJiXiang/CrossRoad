@@ -234,7 +234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274528166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5603801, y: 25.37, z: 0}
+  m_LocalPosition: {x: 0.5603801, y: 32.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1015,6 +1015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1477524592}
   - component: {fileID: 1477524593}
+  - component: {fileID: 1477524594}
   m_Layer: 0
   m_Name: Water
   m_TagString: Water
@@ -1089,6 +1090,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1477524594
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477524591}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 16.45, y: 4.7}
+    newSize: {x: 16.45, y: 4.7}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 16.45, y: 4.7}
+  m_EdgeRadius: 0
 --- !u!4 &1485157746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6243917327747909955, guid: 0378d06c55e2c4914ac70debd9260edd, type: 3}
@@ -1715,7 +1742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3692350745191187204, guid: 444e6ae5ff0f4b24b9c81f34ea9f3f83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.3
+      value: 26.38
       objectReference: {fileID: 0}
     - target: {fileID: 3692350745191187204, guid: 444e6ae5ff0f4b24b9c81f34ea9f3f83, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1755,7 +1782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3692350745191187205, guid: 444e6ae5ff0f4b24b9c81f34ea9f3f83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

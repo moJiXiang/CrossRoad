@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
   private bool buttonHeld;
   private bool isJump;
   private bool canJump;
+  
+  private RaycastHit2D[] result = new RaycastHit2D[2];
 
   private void Awake()
   {
@@ -52,6 +55,21 @@ public class PlayerController : MonoBehaviour
 
   private void OnTriggerStay2D(Collider2D other)
   {
+    if (other.CompareTag("Water") && !isJump)
+    {
+      Physics2D.RaycastNonAlloc(transform.position, Vector2.up, result);
+
+      foreach (var hit in result)
+      {
+        if (!hit.collider) continue;
+
+        if (hit.collider.CompareTag("Wood"))
+        {
+          Debug.Log("在木板上！");
+        }
+      }
+    }
+    
     if (other.CompareTag("Border") || other.CompareTag("Car"))
     {
       Debug.Log("Game Over!");
